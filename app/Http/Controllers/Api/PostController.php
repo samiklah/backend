@@ -148,7 +148,7 @@ class PostController extends Controller
 
     public function report(Request $request, $post_id)
     {
-        $report = new Report();
+        $report = new Report;
             $report->reporter = auth('api')->user()->id;
             $report->report = $request->input('report');
             $report->post = $post_id;

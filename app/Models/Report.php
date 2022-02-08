@@ -8,7 +8,7 @@ use Auth;
 class Report extends Model
 {
   // Table Name
-    protected $table = 'report';
+    protected $table = 'reports';
     // Primary Key
     public $primaryKey = 'id';
     // Timestamps
