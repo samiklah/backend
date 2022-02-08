@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Report;
 use App\Models\View;
 use App\Models\User;
 use DB;
@@ -142,6 +143,18 @@ class PostController extends Controller
             return response('post not found', 401);
         }
         
+        
+    }
+
+    public function report(Request $request, $post_id)
+    {
+        $report = new Report();
+            $report->reporter = auth('api')->user()->id;
+            $report->report = $request->input('report');
+            $report->post = $post_id;
+            $report->save();  
+
+            return response($report, 201);
         
     }
 

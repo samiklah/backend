@@ -18,4 +18,10 @@ Route::get('/', function () {
     $users = DB::select("select * from users");
         return 'hi';
 });
-//Route::get('/welcome', 'FollowController@wellcome')->name('welcome');
+
+Route::get('/support', function () {
+    return view("welcome");
+});
+Route::get('/privacy-policy', function () {
+    return view("privacy");
+});

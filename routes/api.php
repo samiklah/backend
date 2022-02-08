@@ -100,6 +100,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->post('/user/update', 'Api\UserController@update');
+Route::middleware('auth:sanctum')->post('/report/{post_id}', 'Api\PostController@report');
 Route::middleware('auth:sanctum')->post('/user/updatetoken', 'Api\UserController@updateToken');
 Route::middleware('auth:sanctum')->get('/user/following/{id}', 'Api\UserController@getFollowing');
 Route::middleware('auth:sanctum')->get('/user/followers/{id}', 'Api\UserController@getFollowers');
@@ -144,4 +145,5 @@ Route::get('profile/unfollow/{auth}/{user_id}',  [
     'as' => 'unFollowApi',
     'uses' => 'Api\followController2@unFollowApi'
 ]);
+
 

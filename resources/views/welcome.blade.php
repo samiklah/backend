@@ -9,20 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-        <!-- Global site tag (gtag.js) - Google Ads: 864863563 -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-864863563"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'AW-864863563');
-        </script>
-
-        <!-- Event snippet for مشاهدة صفحة conversion page -->
-        <script>
-        gtag('event', 'conversion', {'send_to': 'AW-864863563/8-XoCPXU-fkCEMuKs5wD'});
-        </script>
+        
 
         <!-- Styles -->
         <style>
@@ -42,6 +29,7 @@
             .flex-center {
                 align-items: center;
                 display: flex;
+                
                 justify-content: center;
             }
 
@@ -61,6 +49,7 @@
 
             .title {
                 font-size: 84px;
+                margin-right:40px;
             }
 
             .links > a {
@@ -84,24 +73,22 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Publsher
+                    Switch App
                 </div>
 
-                Sorry the website is under maintenance
+                This is the support page 
             </div>
             <div class="contact">
-                <div>Contact info:</div>
+                <div>Support info:</div>
                 <br>
                 <div>Name: </div><div>Sami Klah</div>
                 <br>
                 <div>Email: </div><div>samikla7@gmail.com</div>
                 <br>
-                <div>Phone number: </div><div>0564185751</div>
+                <div>Phone number (whatsapp only): </div><div>+966564185751</div>
 
                 <br>
                 <div>Country: </div><div>Saudi Arabia</div>
-                <br>
-                <div>Country Code: </div><div>+966</div>
 
             </div>
         </div>
