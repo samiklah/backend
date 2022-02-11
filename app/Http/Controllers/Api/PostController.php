@@ -169,7 +169,7 @@ class PostController extends Controller
                 array_push($users_id_list, $user);
             }
 
-            $posts = Post::whereIn('user_id',  $users_id_list )->orderBy('id','desc')->withCount('view')->take(10)->get();
+            $posts = Post::with("user")->whereIn('user_id',  $users_id_list )->orderBy('id','desc')->withCount('view')->take(10)->get();
             
             return response($posts, 201);
 
