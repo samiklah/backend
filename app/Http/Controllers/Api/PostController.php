@@ -121,18 +121,19 @@ class PostController extends Controller
         if (isset($updatePost)) {
             $view = new View();
             $view->user_id = auth('api')->user()->id;
-            $view->score = $request->input('score');
+            $view->score = round($request->input('score'),2);
             $view->post_id = $post_id;
             $view->save();   
 
-            $postViews = View::where('post_id', '==', $post_id)->count();
+            $postViews = View::where('post_id', $post_id)->count();
 
             $total = $updatePost->total+$request->input('score');
-            $updatePost->total = $total;
+            $updatePost->total = round($total,2);
             if ($postViews == 0) {
-                $updatePost->score = $total;
+                $updatePost->score = round($total,2);
             }else{
-                $updatePost->score = $total/$postViews;
+                $nowScore = $total/$postViews;
+                $updatePost->score = round($nowScore,2);
             }
             
 
@@ -168,7 +169,7 @@ class PostController extends Controller
                 array_push($users_id_list, $user);
             }
 
-            $posts = DB::table('posts')->whereIn('user_id',  $users_id_list )->orderBy('id','desc')->withCount('view')->take(10)->get();
+            $posts = Post::whereIn('user_id',  $users_id_list )->orderBy('id','desc')->withCount('view')->take(10)->get();
             
             return response($posts, 201);
 

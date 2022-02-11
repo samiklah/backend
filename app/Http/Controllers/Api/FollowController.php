@@ -42,8 +42,12 @@ class FollowController extends Controller
     public function follow($user_id)
     {
         $user = User::find($user_id);
+
+        $follow = Follow::where('user_id', auth('api')->user()->id)->where('user_two',$user_id)->get();
+
         
-        if (isset($user) && auth('api')->user()->id != $user_id) {
+        
+        if (isset($user) && auth('api')->user()->id != $user_id && count($follow) == 0) {
   
             auth('api')->user()->following()->attach($user_id);
 
@@ -52,6 +56,7 @@ class FollowController extends Controller
         }else{
             return response("Can not follow", 401);
         }
+        
         
     }
     public function unfollow($user_id)
