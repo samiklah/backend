@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use App\Models\Follow;
 use App\Models\Post;
+use App\Models\Block;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +58,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $isfollowing = $user->isAuthUserFollowing();
+        $isblocking = $user->isAuthUserBlocking();
+        $isblocked = $user->isAuthUserBlocked();
         $posts = Post::where('user_id', $id)->withCount('view')->get();
         $folowers = $user->follower()->get();
         $folowing = $user->following()->get();
@@ -66,7 +69,9 @@ class UserController extends Controller
             'posts' => $posts,
             'folowers' => $folowers,
             'folowing' => $folowing,
-            'isFollowing' => $isfollowing
+            'isFollowing' => $isfollowing,
+            'isblocking' => $isblocking,
+            'isblocked' => $isblocked
         ];
 
         return response($response  , 201);
@@ -168,11 +173,46 @@ class UserController extends Controller
         
     }
 
-public function search($username)
-{
-   $users = User::where('username', 'like', "%{$username}%")->take(3)->get();
-   return response($users , 201);
-}
+    public function search($username)
+    {
+        $users = User::where('username', 'like', "%{$username}%")->take(3)->get();
+        return response($users , 201);
+    }
+
+
+    public function block($user_id)
+    {
+        $user = User::find($user_id);
+
+        $block = Block::where('user_id', auth('api')->user()->id)->where('user_two',$user_id)->get();
+
+        
+        
+        if (isset($user) && auth('api')->user()->id != $user_id && count($block) == 0) {
+
+            auth('api')->user()->follower()->detach($user_id);
+            auth('api')->user()->following()->detach($user_id);
+            auth('api')->user()->blocking()->attach($user_id);
+
+            return response($user, 201);
+        }else{
+            return response("Can not block", 401);
+        }
+        
+    }
+    public function unblock($user_id)
+    {
+        $user = User::find($user_id);
+
+        if (isset($user) && auth('api')->user()->id != $user_id) {
+            
+            auth('api')->user()->blocking()->detach($user_id);
+            return response($user, 201);
+        }else{
+            return response("Can not unblock", 401);
+        }
+    }    
+
 
     /**
      * Remove the specified resource from storage.

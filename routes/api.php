@@ -51,11 +51,15 @@ Route::post('/sanctum/token', function (Request $request) {
     }
     $following = $user->following()->get();
 
+    $blocked = $user->blocked()->pluck('user_id')->toArray();
+            
+
     $token = $user->createToken($request->device_name)->plainTextToken;
 
     $response = [
         'user' => $user,
         'following' => $following,
+        'blocked' => $blocked,
         'token' => $token
     ];
 
@@ -109,6 +113,8 @@ Route::middleware('auth:sanctum')->post('/view/{post_id}', 'Api\PostController@v
 Route::middleware('auth:sanctum')->post('/add/post', 'Api\PostController@store');
 Route::middleware('auth:sanctum')->post('/follow/{user_id}', 'Api\FollowController@follow');
 Route::middleware('auth:sanctum')->post('/unfollow/{user_id}', 'Api\FollowController@unfollow');
+Route::middleware('auth:sanctum')->post('/block/{user_id}', 'Api\UserController@block');
+Route::middleware('auth:sanctum')->post('/unblock/{user_id}', 'Api\UserController@unblock');
 Route::middleware('auth:sanctum')->get('/show/user/{id}', 'Api\UserController@show');
 Route::middleware('auth:sanctum')->get('/posts', 'Api\PostController@index');
 Route::middleware('auth:sanctum')->delete('/post/delete/{id}', 'Api\PostController@destroy');

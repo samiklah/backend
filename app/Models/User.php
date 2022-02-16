@@ -49,6 +49,31 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Article', 'recommends', 'user_id', 'article_id');
     }
 
+    public function blocking()
+    {
+      return $this->belongsToMany('App\Models\User', 'block','user_id','user_two')->withTimestamps();
+    }
+    public function blocked()
+    {
+       return $this->belongsToMany('App\Models\User', 'block','user_two','user_id')->withTimestamps();
+    }
+
+    public function isAuthUserBlocking(){
+        $blocking = $this->blocked()->where('user_id',  auth('api')->user()->id)->get();
+        if ($blocking->isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    public function isAuthUserBlocked(){
+        $blocking = $this->blocking()->where('user_two',  auth('api')->user()->id)->get();
+        if ($blocking->isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
     public function isAuthUserFollowing(){
         $following = $this->follower()->where('user_id',  auth('api')->user()->id)->get();
         if ($following->isEmpty()){
