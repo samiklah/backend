@@ -61,6 +61,7 @@ class UserController extends Controller
         $isblocking = $user->isAuthUserBlocking();
         $isblocked = $user->isAuthUserBlocked();
         $posts = Post::where('user_id', $id)->withCount('view')->get();
+        $blocked = $user->blocked()->pluck('user_id')->toArray();
         $folowers = $user->follower()->get();
         $folowing = $user->following()->get();
 
@@ -71,6 +72,7 @@ class UserController extends Controller
             'folowing' => $folowing,
             'isFollowing' => $isfollowing,
             'isblocking' => $isblocking,
+            'blocked' => $blocked,
             'isblocked' => $isblocked
         ];
 
