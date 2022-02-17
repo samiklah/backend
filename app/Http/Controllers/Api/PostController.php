@@ -37,7 +37,7 @@ class PostController extends Controller
        // $posts = DB::table('posts')->orderBy('score','desc')->get();
        */
 
-        $posts = Post::with("user")->whereNotIn('id', DB::table('view')->select('post_id')->where('user_id', auth('api')->user()->id))->orderBy('score','desc')->withCount('view')->take(10)->get();
+        $posts = Post::with("user")->with("user.blocking")->whereNotIn('id', DB::table('view')->select('post_id')->where('user_id', auth('api')->user()->id))->orderBy('score','desc')->withCount('view')->take(10)->get();
             
         return response($posts, 201);
     }
