@@ -22,6 +22,21 @@ Route::get('/', function () {
 Route::get('/support', function () {
     return view("welcome");
 });
+Route::get('/eula', function () {
+    return view("termsOfUse");
+});
+Route::get('/support/trem-global', function () {
+    return view("welcome-trem");
+});
+Route::get('/support/coinx', function () {
+    return view("welcome-bitmex");
+});
 Route::get('/privacy-policy', function () {
     return view("privacy");
+});
+Route::get('/privacy-policy/trem-global', function () {
+    return view("privacy-trem");
+});
+Route::get('/privacy-policy/coinx', function () {
+    return view("privacy-bitmex");
 });
